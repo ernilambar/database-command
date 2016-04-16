@@ -13,8 +13,13 @@
 			"role": "Developer"
 		}
 		],
-	"require": {
-		"php": ">=5.3"
+    "require": {
+        "php": ">=5.3"
+    },
+	"extras": {
+		"commands": [
+            "database reset"
+        ]
 	},
 	"autoload": {
 		"files": [ "database-command.php" ]
