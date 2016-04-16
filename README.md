@@ -15,9 +15,10 @@ Once you've done so, you can install this package with `wp package install ernil
 
 ## Usage
 
-`wp database reset --author=admin`
+`wp database reset [--author=<author>]`
 
-** Options **
+**Options**
+
     [--author=<author>]
         Administrator user you want to keep after reset. (Required)
 
