@@ -5,6 +5,7 @@
 	"homepage": "https://github.com/ernilambar/database-command",
 	"keywords": ["wp-cli","database"],
 	"license": "MIT",
+  "minimum-stability": "dev",
 	"authors": [
 		{
 			"name": "Nilambar Sharma",
@@ -13,7 +14,7 @@
 			"role": "Developer"
 		}
 		],
-    "require": {
+  "require": {
         "php": ">=5.3"
     },
 	"extras": {
@@ -22,6 +23,9 @@
         ]
 	},
 	"autoload": {
-		"files": [ "database-command.php" ]
-	}
+		"files": [ "command.php" ]
+	},
+  "require-dev": {
+      "behat/behat": "~2.5"
+  }
 }
