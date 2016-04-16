@@ -1,5 +1,9 @@
 <?php
 
+if ( ! class_exists( 'WP_CLI' ) ) {
+	return;
+}
+
 class Run_Database_Command extends WP_CLI_Command {
 
     /**
