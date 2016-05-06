@@ -23,6 +23,14 @@ Feature: Test that database command works.
     And I run `wp database reset --author=testadmin`
     Then STDOUT should contain:
       """
-      Success: Resetting...
+      Resetting...
       Success: Database is reset successfully.
+      """
+
+    When I run `wp user create testadmin2 testadmin2@gmail.com --role=administrator`
+    And I run `wp database reset --author=testadmin2`
+    And I run `wp user list --role=administrator --format=count`
+    Then STDOUT should contain:
+      """
+      1
       """
