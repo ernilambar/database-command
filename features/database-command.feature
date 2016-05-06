@@ -7,5 +7,5 @@ Feature: Test that database command works.
     And I run `wp database reset --author=testsubscriber`
     Then STDOUT should contain:
       """
-      User is not administrator.
+      Error: User is not administrator.
       """
