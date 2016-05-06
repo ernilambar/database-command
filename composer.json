@@ -1,7 +1,7 @@
 {
 	"name": "ernilambar/database-command",
 	"type": "command",
-	"description": "Database tool to reset WordPress",
+	"description": "Tool to reset WordPress database. This reset WP database but retains given administrator user account.",
 	"homepage": "https://github.com/ernilambar/database-command",
 	"keywords": ["wp-cli","database"],
 	"license": "MIT",

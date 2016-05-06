@@ -10,7 +10,7 @@ notifications:
 branches:
   only:
     - master
-    - testing
+    - develop
 
 php:
   - 5.3
