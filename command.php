@@ -20,6 +20,11 @@ class Run_Database_Command extends WP_CLI_Command {
      */
     public function reset( $args, $assoc_args ) {
 
+    	// Bail if multisite.
+        if ( is_multisite() ) {
+	        WP_CLI::error( 'Multisite is not supported!' );
+        }
+
     	$defaults = array(
     		'author' => null,
 		);
