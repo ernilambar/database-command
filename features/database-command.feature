@@ -15,3 +15,14 @@ Feature: Test that database command works.
       """
       Error: User is not administrator.
       """
+
+  Scenario: Administrator user is passed as author
+    Given a WP install
+
+    When I run `wp user create testadmin testadmin@gmail.com --role=administrator`
+    And I run `wp database reset --author=testadmin`
+    Then STDOUT should contain:
+      """
+      Success: Resetting...
+      Success: Database is reset successfully.
+      """

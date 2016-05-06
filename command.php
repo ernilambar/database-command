@@ -52,7 +52,7 @@ class Run_Database_Command extends WP_CLI_Command {
      */
     private function reset_callback( $user ) {
 
-    	WP_CLI::success( 'Resetting...' );
+    	WP_CLI::log( 'Resetting...' );
 
     	// We dont want email notification.
     	if ( ! function_exists( 'wp_new_blog_notification' ) ) {
