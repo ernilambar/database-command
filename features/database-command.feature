@@ -34,3 +34,11 @@ Feature: Test that database command works.
       """
       1
       """
+
+    When I run `wp user create testadmin3 testadmin3@gmail.com --role=administrator`
+    And I run `wp database reset --author=testadmin3`
+    And I run `wp user get testadmin3 --field=email`
+    Then STDOUT should contain:
+      """
+      testadmin3@gmail.com
+      """
