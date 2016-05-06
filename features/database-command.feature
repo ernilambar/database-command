@@ -1,3 +1,25 @@
+Feature: Bail in multisite setup.
+
+  Scenario: Test if multisite in subdirectory
+    Given a WP multisite subdirectory install
+
+    When I try `wp database reset --author=dummyuser`
+    Then STDERR should contain:
+      """
+      Error: Multisite is not supported!
+      """
+
+Feature: Bail in multisite setup.
+
+  Scenario: Test if multisite in subdomain
+    Given a WP multisite subdomain install
+
+    When I try `wp database reset --author=dummyuser`
+    Then STDERR should contain:
+      """
+      Error: Multisite is not supported!
+      """
+
 Feature: Test that database command works.
 
   Scenario: Test author parameter is passed
