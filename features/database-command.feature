@@ -3,12 +3,6 @@ Feature: Test that database command works.
   Scenario: Test author parameter is passed
     Given a WP install
 
-    When I try `wp database reset`
-    Then STDERR should contain:
-      """
-      Error: --author is required
-      """
-
     When I try `wp database reset --author=`
     Then STDERR should contain:
       """
