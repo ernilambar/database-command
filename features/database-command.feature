@@ -4,7 +4,7 @@ Feature: Test that database command works.
     Given a WP install
 
     When I run `wp user create testsubscriber testsubscriber@gmail.com --role=subscriber`
-    And I run `wp database reset --author=testsubscriber`
+    And I try `wp database reset --author=testsubscriber`
     Then STDERR should contain:
       """
       Error: User is not administrator.
