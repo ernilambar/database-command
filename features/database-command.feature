@@ -6,5 +6,5 @@ Feature: Test that database command works.
     When I run `wp database reset`
     Then STDOUT should contain:
       """
-      --author is required
+      missing --author parameter (Administrator user you want to keep after reset. (Required))
       """
