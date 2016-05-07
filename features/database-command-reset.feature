@@ -48,3 +48,21 @@ Feature: Test reset behaviour
       {BLOG_NAME}
       """
 
+    When I run `wp user create testadmin7 testadmin7@gmail.com --role=administrator`
+    And I run `wp user generate --count=10`
+    And I run `wp database reset --author=testadmin7`
+    And I run `wp user list --format=count`
+    Then STDOUT should be:
+      """
+      1
+      """
+
+    When I run `wp user create testadmin8 testadmin8@gmail.com --role=administrator`
+    And I run `wp term generate --count=10`
+    And I run `wp database reset --author=testadmin8`
+    And I run `wp term list --format=count`
+    Then STDOUT should be:
+      """
+      1
+      """
+
