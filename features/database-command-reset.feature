@@ -58,11 +58,21 @@ Feature: Test reset behaviour
       """
 
     When I run `wp user create testadmin8 testadmin8@gmail.com --role=administrator`
-    And I run `wp term generate --count=10`
+    And I run `wp term generate category --count=10`
     And I run `wp database reset --author=testadmin8`
-    And I run `wp term list --format=count`
+    And I run `wp term list category --format=count`
     Then STDOUT should be:
       """
       1
       """
 
+    When I run `wp post create --post_type=post --post_title='Just a test post' --porcelain`
+    And save STDOUT as {SAMPLE_POST_ID}
+    And I run `wp comment generate --post_id={SAMPLE_POST_ID}`
+    And I run `wp user create testadmin9 testadmin9@gmail.com --role=administrator`
+    And I run `wp database reset --author=testadmin9`
+    And I run `wp comment list --format=count`
+    Then STDOUT should be:
+      """
+      1
+      """
