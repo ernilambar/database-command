@@ -30,12 +30,21 @@ Feature: Test reset behaviour
       """
 
     When I run `wp user create testadmin5 testadmin5@gmail.com --role=administrator`
-    And I run `wp post create --post_title='Sample Post 1' --post_status=publish`
-    And I run `wp post create --post_title='Sample Post 2' --post_status=publish`
+    And I run `wp post generate --count=10`
     And I run `wp database reset --author=testadmin5`
     And I run `wp post list --format=count`
     Then STDOUT should be:
       """
       1
+      """
+
+    When I run `wp user create testadmin6 testadmin6@gmail.com --role=administrator`
+    And I run `wp option get blogname`
+    And save STDOUT as {BLOG_NAME}
+    And I run `wp database reset --author=testadmin6`
+    And I run `wp option get blogname`
+    Then STDOUT should be:
+      """
+      {BLOG_NAME}
       """
 
