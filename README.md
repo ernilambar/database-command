@@ -1,11 +1,11 @@
 ernilambar/database-command
 ===========================
 
-Database tool to reset WordPress
+Tool to reset WordPress database. This reset WP database but retains given administrator user account.
 
 [![Build Status](https://travis-ci.org/ernilambar/database-command.svg?branch=master)](https://travis-ci.org/ernilambar/database-command)
 
-Quick links: [Installing](#installing) | [Usage](#usage) |[Contributing](#contributing)
+Quick links: [Installing](#installing) | [Usage](#usage) | [Contributing](#contributing)
 
 ## Installing
 
@@ -15,12 +15,12 @@ Once you've done so, you can install this package with `wp package install ernil
 
 ## Usage
 
-`wp database reset [--author=<author>]`
+`wp database reset --author=<author>`
 
 **Options**
 
-    [--author=<author>]
-        Administrator user you want to keep after reset. (Required)
+    --author=<author>
+        Administrator user you want to keep after reset
 
 ## Contributing
 
