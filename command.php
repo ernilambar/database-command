@@ -15,12 +15,12 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 class Run_Database_Command extends WP_CLI_Command {
 
     /**
-     * Reset database content except one administrator user login.
+     * Reset database content except one administrator user.
      *
      * ## OPTIONS
      *
      * --author=<username>
-     * : Administrator user you want to keep after reset. (Required)
+     * : Administrator user you want to keep after reset.
      *
      * ## EXAMPLES
      *
@@ -35,24 +35,21 @@ class Run_Database_Command extends WP_CLI_Command {
         }
 
     	$defaults = array(
-    		'author' => null,
+			'author' => null,
 		);
     	$assoc_args = wp_parse_args( $assoc_args, $defaults );
 
-        $author = '';
-        if ( isset( $assoc_args['author'] ) && ! empty( $assoc_args['author'] ) ) {
-        	$author = $assoc_args['author'];
-        }
-        if ( empty( $author ) ) {
-	        WP_CLI::error( '--author is required' );
-        }
+    	$author = $assoc_args['author'];
+
         $author_obj = get_user_by( 'login', $author );
         if ( false === username_exists( $author ) ) {
 	        WP_CLI::error( 'User does not exist.' );
         }
+
         if ( ! user_can( $author_obj, 'administrator' )  ) {
 	        WP_CLI::error( 'User is not administrator.' );
         }
+
         $this->reset_callback( $author_obj );
 
     }
@@ -105,13 +102,8 @@ class Run_Database_Command extends WP_CLI_Command {
         $query = $wpdb->prepare( "UPDATE $wpdb->users SET user_pass = %s, user_activation_key = '' WHERE ID = %d", $user->user_pass, $user_id );
         $wpdb->query( $query );
 
-        if ( get_user_meta( $user_id, 'default_password_nag' ) ) {
-        	update_user_meta( $user_id, 'default_password_nag', false );
-        }
-
-        if ( get_user_meta( $user_id, $wpdb->prefix . 'default_password_nag' ) ) {
-        	update_user_meta( $user_id, $wpdb->prefix . 'default_password_nag', false );
-        }
+        // Fix password update nag.
+    	update_user_meta( $user_id, 'default_password_nag', false );
 
         wp_clear_auth_cookie();
 
