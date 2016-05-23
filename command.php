@@ -4,6 +4,14 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 	return;
 }
 
+/**
+ * Manage database.
+ *
+ * ## EXAMPLES
+ *
+ *     # Reset database and keep `admin` user
+ *     $ wp database reset --author=admin
+ */
 class Run_Database_Command extends WP_CLI_Command {
 
     /**
@@ -14,9 +22,10 @@ class Run_Database_Command extends WP_CLI_Command {
      * --author=<username>
      * : Administrator user you want to keep after reset. (Required)
      *
-     * ## EXAMPLE
-     * # Reset database and keep `admin` user.
-     * wp database reset --author=admin
+     * ## EXAMPLES
+     *
+     *     # Reset database and keep `admin` user
+     *     $ wp database reset --author=admin
      */
     public function reset( $args, $assoc_args ) {
 
