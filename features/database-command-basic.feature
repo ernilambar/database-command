@@ -24,7 +24,8 @@ Feature: Basic tests
     When I try `wp database reset`
     Then STDERR should contain:
       """
-      Error: Parameter errors: missing --author parameter (Administrator user you want to keep after reset)
+      Error: Parameter errors:
+       missing --author parameter (Administrator user you want to keep after reset)
       """
 
   Scenario: Test author parameter is passed
