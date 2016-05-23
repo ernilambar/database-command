@@ -20,7 +20,7 @@ class Run_Database_Command extends WP_CLI_Command {
      * ## OPTIONS
      *
      * --author=<username>
-     * : Administrator user you want to keep after reset.
+     * : Administrator user you want to keep after reset
      *
      * ## EXAMPLES
      *
