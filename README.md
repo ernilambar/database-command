@@ -11,7 +11,7 @@ Quick links: [Installing](#installing) | [Usage](#usage) | [Contributing](#contr
 
 Installing this package requires WP-CLI v0.23.0 or greater. Update to the latest stable release with `wp cli update`.
 
-Once you've done so, you can install this package with `wp package install ernilambar/database-command`
+Once you've done so, you can install this package with `wp package install git@github.com:ernilambar/database-command.git`
 
 ## Usage
 
@@ -20,7 +20,7 @@ Once you've done so, you can install this package with `wp package install ernil
 **Options**
 
     --author=<author>
-        Administrator user you want to keep after reset
+        Administrator user you want to keep after reset.
 
 ## Contributing
 
