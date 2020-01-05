@@ -11,7 +11,11 @@ Quick links: [Installing](#installing) | [Usage](#usage) | [Contributing](#contr
 
 Installing this package requires WP-CLI v0.23.0 or greater. Update to the latest stable release with `wp cli update`.
 
-Once you've done so, you can install this package with `wp package install git@github.com:ernilambar/database-command.git`
+Once you've done so, you can install this package with following command.
+
+```bash
+wp package install git@github.com:ernilambar/database-command.git
+```
 
 ## Usage
 
