@@ -1,116 +1,17 @@
 <?php
 
-if ( ! class_exists( 'WP_CLI' ) ) {
+namespace Nilambar\WP_CLI_Database\DatabaseCommand;
+
+use WP_CLI;
+
+if ( ! class_exists( '\WP_CLI' ) ) {
 	return;
 }
 
-/**
- * Manage database.
- *
- * ## EXAMPLES
- *
- *     # Reset database and keep `admin` user
- *     $ wp database reset --author=admin
- */
-class Run_Database_Command extends WP_CLI_Command {
+$wpcli_database_command_autoloader = __DIR__ . '/vendor/autoload.php';
 
-    /**
-     * Reset database content except one administrator user.
-     *
-     * ## OPTIONS
-     *
-     * --author=<username>
-     * : Administrator user you want to keep after reset
-     *
-     * ## EXAMPLES
-     *
-     *     # Reset database and keep `admin` user
-     *     $ wp database reset --author=admin
-     */
-    public function reset( $args, $assoc_args ) {
-
-    	// Bail if multisite.
-        if ( is_multisite() ) {
-	        WP_CLI::error( 'Multisite is not supported!' );
-        }
-
-    	$defaults = array(
-			'author' => null,
-		);
-    	$assoc_args = wp_parse_args( $assoc_args, $defaults );
-
-    	$author = $assoc_args['author'];
-
-        $author_obj = get_user_by( 'login', $author );
-        if ( false === username_exists( $author ) ) {
-	        WP_CLI::error( 'User does not exist.' );
-        }
-
-        if ( ! user_can( $author_obj, 'administrator' )  ) {
-	        WP_CLI::error( 'User is not administrator.' );
-        }
-
-        $this->reset_callback( $author_obj );
-
-    }
-
-    /**
-     * Reset database.
-     *
-     * @access private
-     *
-     * @param WP_User $user WP_User object.
-     */
-    private function reset_callback( $user ) {
-
-    	WP_CLI::log( 'Resetting...' );
-
-    	// We dont want email notification.
-    	if ( ! function_exists( 'wp_new_blog_notification' ) ) {
-    		function wp_new_blog_notification() {
-				// Silence is golden.
-    		}
-    	}
-    	require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-
-		$blogname    = get_option( 'blogname' );
-		$admin_email = get_option( 'admin_email' );
-		$blog_public = get_option( 'blog_public' );
-		$siteurl     = get_option( 'siteurl' );
-
-    	global $wpdb;
-
-    	$prefix = str_replace( '_', '\_', $wpdb->prefix );
-
-    	$tables = $wpdb->get_col( "SHOW TABLES LIKE '{$prefix}%'" );
-    	foreach ( $tables as $table ) {
-    		$wpdb->query( "DROP TABLE $table" );
-    	}
-
-    	// Set site URL.
-    	WP_CLI::set_url( $siteurl );
-
-        $result = wp_install( $blogname, $user->user_login, $user->user_email, $blog_public );
-        if ( is_wp_error( $result ) ) {
-        	WP_CLI::error( 'Reset failed (' . WP_CLI::error_to_string( $result ) . ').' );
-        }
-        if ( ! empty( $GLOBALS['wpdb']->last_error ) ) {
-        	WP_CLI::error( 'Resetting produced database errors, and may have partially or completely failed.' );
-        }
-        extract( $result, EXTR_SKIP );
-
-        $query = $wpdb->prepare( "UPDATE $wpdb->users SET user_pass = %s, user_activation_key = '' WHERE ID = %d", $user->user_pass, $user_id );
-        $wpdb->query( $query );
-
-        // Fix password update nag.
-    	update_user_meta( $user_id, 'default_password_nag', false );
-
-        wp_clear_auth_cookie();
-
-        WP_CLI::success( 'Database is reset successfully.' );
-
-    }
-
+if ( file_exists( $wpcli_database_command_autoloader ) ) {
+	require_once $wpcli_database_command_autoloader;
 }
 
-WP_CLI::add_command( 'database', 'Run_Database_Command' );
+WP_CLI::add_command( 'database', DatabaseCommand::class );
