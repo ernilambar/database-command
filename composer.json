@@ -1,11 +1,12 @@
 {
 	"name": "ernilambar/database-command",
-	"type": "wp-cli-package",
 	"description": "Tool to reset WordPress database. This reset WP database but retains given administrator user account.",
-	"homepage": "https://github.com/ernilambar/database-command",
-	"keywords": ["wp-cli","database"],
 	"license": "MIT",
-  "minimum-stability": "dev",
+	"type": "wp-cli-package",
+	"keywords": [
+		"wp-cli",
+		"database"
+	],
 	"authors": [
 		{
 			"name": "Nilambar Sharma",
@@ -13,19 +14,49 @@
 			"homepage": "https://www.nilambar.net",
 			"role": "Developer"
 		}
-		],
-  "require": {
-        "php": ">=5.3"
-    },
-	"extras": {
-		"commands": [
-            "database reset"
-        ]
+	],
+	"homepage": "https://github.com/ernilambar/database-command",
+	"require": {
+		"wp-cli/wp-cli": "^2.10"
+	},
+	"require-dev": {
+		"wp-cli/entity-command": "^2.6",
+		"wp-cli/wp-cli-tests": "^4"
 	},
 	"autoload": {
-		"files": [ "command.php" ]
+    "psr-4": {
+      "Nilambar\\WP_CLI_Database\\DatabaseCommand\\": "src/"
+    },
+		"files": [
+			"command.php"
+		]
 	},
-  "require-dev": {
-      "behat/behat": "~2.5"
-  }
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+	"config": {
+    "process-timeout": 7200,
+    "sort-packages": true,
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+    "behat": "run-behat-tests",
+    "behat-rerun": "rerun-behat-tests",
+    "lint": "run-linter-tests",
+    "phpcs": "run-phpcs-tests",
+    "phpunit": "run-php-unit-tests",
+    "prepare-tests": "install-package-tests",
+    "test": [
+        "@lint",
+        "@phpcs",
+        "@phpunit",
+        "@behat"
+      ]
+  },
+	"extras": {
+		"commands": [
+			"database reset"
+		]
+	}
 }

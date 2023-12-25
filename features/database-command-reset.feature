@@ -76,3 +76,13 @@ Feature: Test reset behaviour
       """
       1
       """
+
+    When I run `wp user create testadmin10 testadmin10@gmail.com --role=administrator`
+    And I run `wp option get siteurl`
+    And save STDOUT as {SITE_URL}
+    And I run `wp database reset --author=testadmin10`
+    And I run `wp option get siteurl`
+    Then STDOUT should be:
+      """
+      {SITE_URL}
+      """
