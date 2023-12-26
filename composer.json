@@ -17,10 +17,11 @@
 	],
 	"homepage": "https://github.com/ernilambar/database-command",
 	"require": {
-		"wp-cli/wp-cli": "^2.10"
+		"wp-cli/wp-cli": "^2.0"
 	},
 	"require-dev": {
 		"wp-cli/entity-command": "^2.6",
+		"wp-cli/scaffold-package-command": "^2.0",
 		"wp-cli/wp-cli-tests": "^4"
 	},
 	"autoload": {
@@ -55,9 +56,16 @@
         "@behat"
       ]
   },
-	"extras": {
+	"extra": {
 		"commands": [
 			"database reset"
-		]
+		],
+    "readme": {
+      "sections": [
+        "Using",
+        "Installing",
+        "Contributing"
+      ]
+    }
 	}
 }
