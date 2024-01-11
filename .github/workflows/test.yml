@@ -10,4 +10,4 @@ on:
 
 jobs:
   test:
-    uses: wp-cli/.github/.github/workflows/reusable-testing.yml@main
+    uses: wp-cli/.github/blob/4bc08d7563ea3a1f5bb72e45d23a0f17b2b7de5f/.github/workflows/reusable-code-quality.yml@main
