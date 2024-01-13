@@ -21,4 +21,13 @@
 	<!-- Rules: Include the base ruleset for WP-CLI projects. -->
 	<rule ref="WP_CLI_CS"/>
 
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="Nilambar\WP_CLI_Database"/><!-- Namespaces. -->
+				<element value="wpcli_database_command"/><!-- Global variables and such. -->
+			</property>
+		</properties>
+	</rule>
+
 </ruleset>

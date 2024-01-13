@@ -25,7 +25,7 @@ Feature: Basic tests
     Then STDERR should contain:
       """
       Error: Parameter errors:
-       missing --author parameter (Administrator user you want to keep after reset)
+       missing --author parameter (Administrator user you want to keep after reset.)
       """
 
   Scenario: Test author parameter is passed but non-existent user

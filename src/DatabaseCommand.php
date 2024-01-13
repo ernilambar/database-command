@@ -13,11 +13,11 @@ class DatabaseCommand extends WP_CLI_Command {
 	* ## OPTIONS
 	*
 	 * --author=<username>
-	 * : Administrator user you want to keep after reset
+	 * : Administrator user you want to keep after reset.
 	*
 	 * ## EXAMPLES
 	 *
-	 *     # Reset database and keep `admin` user
+	 *     # Reset database and keep `admin` user.
 	 *     $ wp database reset --author=admin
 	 *
 	 * @when after_wp_load
@@ -62,7 +62,7 @@ class DatabaseCommand extends WP_CLI_Command {
 	private function reset_callback( $user ) {
 		WP_CLI::log( 'Resetting...' );
 
-		// We dont want email notification.
+		// We don't want email notification.
 		if ( ! function_exists( 'wp_new_blog_notification' ) ) {
 			function wp_new_blog_notification() {
 				// Silence is golden.
@@ -79,10 +79,10 @@ class DatabaseCommand extends WP_CLI_Command {
 
 		$prefix = str_replace( '_', '\_', $wpdb->prefix );
 
-		$tables = $wpdb->get_col( "SHOW TABLES LIKE '{$prefix}%'" );
+		$tables = $wpdb->get_col( "SHOW TABLES LIKE '{$prefix}%'" ); // phpcs:ignore WordPress.DB.PreparedSQL
 
 		foreach ( $tables as $table ) {
-			$wpdb->query( "DROP TABLE $table" );
+			$wpdb->query( "DROP TABLE $table" ); // phpcs:ignore WordPress.DB.PreparedSQL
 		}
 
 		// Set site URL.
