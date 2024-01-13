@@ -16,16 +16,16 @@ wp database reset --author=<username>
 **OPTIONS**
 
 	--author=<username>
-		Administrator user you want to keep after reset
+		Administrator user you want to keep after reset.
 
 **EXAMPLES**
 
-    # Reset database and keep `admin` user
+    # Reset database and keep `admin` user.
     $ wp database reset --author=admin
 
 ## Installing
 
-Installing this package requires WP-CLI v2.0 or greater. Update to the latest stable release with `wp cli update`.
+Installing this package requires WP-CLI v2.9 or greater. Update to the latest stable release with `wp cli update`.
 
 Once you've done so, you can install the latest stable version of this package with:
 
