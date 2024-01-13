@@ -77,12 +77,10 @@ class DatabaseCommand extends WP_CLI_Command {
 
 		global $wpdb;
 
-		$prefix = str_replace( '_', '\_', $wpdb->prefix );
-
-		$tables = $wpdb->get_col( "SHOW TABLES LIKE '{$prefix}%'" );
+		$tables = $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->prefix ) . '%' ) );
 
 		foreach ( $tables as $table ) {
-			$wpdb->query( "DROP TABLE $table" );
+			$wpdb->query( sprintf( 'DROP TABLE %s', esc_attr( $table ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
 
 		// Set site URL.
