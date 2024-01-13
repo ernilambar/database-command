@@ -17,55 +17,56 @@
 	],
 	"homepage": "https://github.com/ernilambar/database-command",
 	"require": {
-		"wp-cli/wp-cli": "^2"
+		"wp-cli/wp-cli": "^2.9"
 	},
 	"require-dev": {
 		"wp-cli/entity-command": "2.5",
 		"wp-cli/scaffold-package-command": "^2",
 		"wp-cli/wp-cli-tests": "^4"
 	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"autoload": {
-    "psr-4": {
-      "Nilambar\\WP_CLI_Database\\DatabaseCommand\\": "src/"
-    },
+		"psr-4": {
+			"Nilambar\\WP_CLI_Database\\DatabaseCommand\\": "src/"
+		},
 		"files": [
 			"command.php"
 		]
 	},
-  "minimum-stability": "dev",
-  "prefer-stable": true,
 	"config": {
-    "process-timeout": 7200,
-    "sort-packages": true,
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
-		}
+		},
+		"process-timeout": 7200,
+		"sort-packages": true
 	},
-	"scripts": {
-    "behat": "run-behat-tests",
-    "behat-rerun": "rerun-behat-tests",
-    "lint": "run-linter-tests",
-    "phpcs": "run-phpcs-tests",
-    "phpcbf": "run-phpcbf-cleanup",
-    "phpunit": "run-php-unit-tests",
-    "prepare-tests": "install-package-tests",
-    "test": [
-        "@lint",
-        "@phpcs",
-        "@phpunit",
-        "@behat"
-      ]
-  },
 	"extra": {
 		"commands": [
 			"database reset"
 		],
-    "readme": {
-      "sections": [
-        "Using",
-        "Installing",
-        "Contributing"
-      ]
-    }
+		"readme": {
+			"sections": [
+				"Using",
+				"Installing",
+				"Contributing"
+			]
+		}
+	},
+	"scripts": {
+		"behat": "run-behat-tests",
+		"behat-rerun": "rerun-behat-tests",
+		"lint": "run-linter-tests",
+		"phpcbf": "run-phpcbf-cleanup",
+		"phpcs": "run-phpcs-tests",
+		"phpunit": "run-php-unit-tests",
+		"prepare-tests": "install-package-tests",
+		"readme": "wp scaffold package-readme . --force",
+		"test": [
+			"@lint",
+			"@phpcs",
+			"@phpunit",
+			"@behat"
+		]
 	}
 }
