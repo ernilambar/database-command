@@ -62,7 +62,7 @@ class DatabaseCommand extends WP_CLI_Command {
 	private function reset_callback( $user ) {
 		WP_CLI::log( 'Resetting...' );
 
-		// We dont want email notification.
+		// We don't want email notification.
 		if ( ! function_exists( 'wp_new_blog_notification' ) ) {
 			function wp_new_blog_notification() {
 				// Silence is golden.
@@ -79,10 +79,10 @@ class DatabaseCommand extends WP_CLI_Command {
 
 		$prefix = str_replace( '_', '\_', $wpdb->prefix );
 
-		$tables = $wpdb->get_col( "SHOW TABLES LIKE '{$prefix}%'" );
+		$tables = $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $prefix . '%' ) ) );
 
 		foreach ( $tables as $table ) {
-			$wpdb->query( "DROP TABLE $table" );
+			$wpdb->query( $wpdb->prepare( 'DROP TABLE %s', $table ) );
 		}
 
 		// Set site URL.
