@@ -9,6 +9,19 @@ Quick links: [Using](#using) | [Installing](#installing) | [Contributing](#contr
 
 ## Using
 
+**Featured Commands:**
+
+- [wp database test](#wp-database-test)
+- [wp database reset](#wp-database-reset)
+
+
+This package implements the following commands:
+
+
+### wp database reset
+
+Reset database content except one administrator user.
+
 ~~~
 wp database reset --author=<username>
 ~~~
@@ -22,6 +35,16 @@ wp database reset --author=<username>
 
     # Reset database and keep `admin` user.
     $ wp database reset --author=admin
+
+
+
+### wp database test
+
+Reset database content except one administrator user.
+
+~~~
+wp database test 
+~~~
 
 ## Installing
 

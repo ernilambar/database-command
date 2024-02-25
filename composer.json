@@ -43,8 +43,13 @@
 	},
 	"extra": {
 		"commands": [
-			"database reset"
+			"database reset",
+      "database test"
 		],
+    "featured-commands": [
+      "database test",
+      "database reset"
+    ],
 		"readme": {
 			"sections": [
 				"Using",

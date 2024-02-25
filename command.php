@@ -14,4 +14,5 @@ if ( file_exists( $wpcli_database_command_autoloader ) ) {
 	require_once $wpcli_database_command_autoloader;
 }
 
-WP_CLI::add_command( 'database', DatabaseCommand::class );
+WP_CLI::add_command( 'database reset', [ DatabaseCommand::class, 'reset' ] );
+WP_CLI::add_command( 'database test', [ DatabaseCommand::class, 'test' ] );

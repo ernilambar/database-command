@@ -22,6 +22,8 @@ class DatabaseCommand extends WP_CLI_Command {
 	 *
 	 * @when after_wp_load
 	 *
+	 * @subcommand reset
+	 *
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
 	 */
@@ -50,6 +52,19 @@ class DatabaseCommand extends WP_CLI_Command {
 		}
 
 		$this->reset_callback( $author_obj );
+	}
+
+	/**
+	 * Reset database content except one administrator user.
+	 *
+	 * @when after_wp_load
+	 *
+	 * @subcommand test
+	 *
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 */
+	public function test( $args, $assoc_args ) {
 	}
 
 	/**
