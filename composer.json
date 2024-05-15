@@ -22,7 +22,7 @@
 	"require-dev": {
 		"wp-cli/entity-command": "2.5",
 		"wp-cli/scaffold-package-command": "^2",
-		"wp-cli/wp-cli-tests": "^4"
+		"wp-cli/wp-cli-tests": "*"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -34,9 +34,19 @@
 			"command.php"
 		]
 	},
+  "repositories": [
+    {
+			"type": "path",
+			"url": "/Users/nilambarsharma/Work/wpcmd/wp-cli-tests",
+			"options": {
+				"symlink": true
+			}
+		}
+  ],
 	"config": {
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
 		},
 		"process-timeout": 7200,
 		"sort-packages": true
@@ -59,12 +69,14 @@
 		"lint": "run-linter-tests",
 		"phpcbf": "run-phpcbf-cleanup",
 		"phpcs": "run-phpcs-tests",
+		"phpstan": "run-phpstan-tests",
 		"phpunit": "run-php-unit-tests",
 		"prepare-tests": "install-package-tests",
 		"readme": "wp scaffold package-readme . --force",
 		"test": [
 			"@lint",
 			"@phpcs",
+			"@phpstan",
 			"@phpunit",
 			"@behat"
 		]

@@ -1,0 +1,8 @@
+parameters:
+  level: 0
+  paths:
+    - command.php
+    - src/
+  scanFiles:
+    - command.php
+  treatPhpDocTypesAsCertain: false
