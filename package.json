@@ -1,0 +1,13 @@
+{
+  "name": "database-command",
+  "description": "Tool to reset WordPress database.",
+  "scripts": {
+    "lint": "node ./node_modules/gherkin-lint/dist/main.js -i \"vendor/**\""
+  },
+  "keywords": [ "wordpress", "cli" ],
+  "author": "Nilambar Sharma",
+  "license": "MIT",
+  "devDependencies": {
+    "gherkin-lint": "^4.2.4"
+  }
+}
