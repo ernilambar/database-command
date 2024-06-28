@@ -62,7 +62,7 @@
 		"phpcs": "run-phpcs-tests",
 		"phpunit": "run-php-unit-tests",
 		"prepare-tests": "install-package-tests",
-		"readme": "wp scaffold package-readme . --force",
+		"readme": "./vendor/bin/wp scaffold package-readme . --force",
 		"test": [
 			"@lint",
 			"@phpcs",
