@@ -17,10 +17,10 @@
 	],
 	"homepage": "https://github.com/ernilambar/database-command",
 	"require": {
-		"wp-cli/wp-cli": "^2.9"
+		"wp-cli/wp-cli": "^2.11"
 	},
 	"require-dev": {
-		"wp-cli/entity-command": "2.5",
+		"wp-cli/entity-command": "^2",
 		"wp-cli/scaffold-package-command": "^2",
 		"wp-cli/wp-cli-tests": "^4"
 	},
