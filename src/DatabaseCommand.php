@@ -35,6 +35,8 @@ class DatabaseCommand extends WP_CLI_Command {
 			'author' => null,
 		);
 
+		\str_contains( 'abc', '' );
+
 		$assoc_args = \wp_parse_args( $assoc_args, $defaults );
 
 		$author = $assoc_args['author'];
