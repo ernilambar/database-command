@@ -17,12 +17,15 @@
 	],
 	"homepage": "https://github.com/ernilambar/database-command",
 	"require": {
-		"wp-cli/wp-cli": "^2.11"
+		"php": ">=7.2.24 || ^8.0",
+		"wp-cli/wp-cli": "^3.0"
 	},
 	"require-dev": {
-		"wp-cli/entity-command": "^2",
-		"wp-cli/scaffold-package-command": "^2",
-		"wp-cli/wp-cli-tests": "^4"
+		"wp-cli/db-command": "^3.0",
+		"wp-cli/entity-command": "^3.0",
+		"wp-cli/role-command": "^3.0",
+		"wp-cli/scaffold-package-command": "^3.0",
+		"wp-cli/wp-cli-tests": "^5.2"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -37,8 +40,11 @@
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
-			"ergebnis/composer-normalize": true
+			"ergebnis/composer-normalize": true,
+			"johnpbloch/wordpress-core-installer": true,
+			"phpstan/extension-installer": true
 		},
+		"optimize-autoloader": true,
 		"process-timeout": 7200,
 		"sort-packages": true
 	},
@@ -49,8 +55,7 @@
 		"readme": {
 			"sections": [
 				"Using",
-				"Installing",
-				"Contributing"
+				"Installing"
 			]
 		}
 	},
@@ -60,9 +65,10 @@
 		"lint": "run-linter-tests",
 		"phpcbf": "run-phpcbf-cleanup",
 		"phpcs": "run-phpcs-tests",
+		"phpstan": "run-phpstan-tests",
 		"phpunit": "run-php-unit-tests",
 		"prepare-tests": "install-package-tests",
-		"readme": "./vendor/bin/wp scaffold package-readme . --force",
+		"readme": "./vendor/bin/wp scaffold package-readme . --force --branch=main",
 		"test": [
 			"@lint",
 			"@phpcs",
