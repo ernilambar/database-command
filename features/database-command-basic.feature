@@ -51,7 +51,7 @@ Feature: Basic tests
 
     When I run `wp user create firstadmin firstadmin@gmail.com --role=administrator`
     And I run `wp user create secondadmin secondadmin@gmail.com --role=administrator`
-    And I run `wp database reset --author=secondadmin`
+    And I run `wp database reset --author=secondadmin --yes`
     And I run `wp user list --role=administrator --format=count`
     Then STDOUT should be:
       """
@@ -62,7 +62,7 @@ Feature: Basic tests
     Given a WP install
 
     When I run `wp user create admin.name admin.name@gmail.com --role=administrator`
-    And I run `wp database reset --author=admin.name`
+    And I run `wp database reset --author=admin.name --yes`
     Then STDOUT should contain:
       """
       Success: Database is reset successfully.
@@ -80,7 +80,7 @@ Feature: Basic tests
       """
 
     When I run `wp user create installfailadmin installfailadmin@gmail.com --role=administrator`
-    And I try `wp database reset --author=installfailadmin`
+    And I try `wp database reset --author=installfailadmin --yes`
     Then STDERR should contain:
       """
       Error: Reset failed
@@ -92,7 +92,7 @@ Feature: Basic tests
     When I run `wp role create customadmin "Custom Admin"`
     And I run `wp user create customadminuser customadminuser@gmail.com --role=customadmin`
     And I run `wp eval 'get_role( "customadmin" )->add_cap( "manage_options" );'`
-    And I run `wp database reset --author=customadminuser`
+    And I run `wp database reset --author=customadminuser --yes`
     Then STDOUT should contain:
       """
       Success: Database is reset successfully.
@@ -102,8 +102,8 @@ Feature: Basic tests
     Given a WP install
 
     When I run `wp user create repeatadmin repeatadmin@gmail.com --role=administrator`
-    And I run `wp database reset --author=repeatadmin`
-    And I run `wp database reset --author=repeatadmin`
+    And I run `wp database reset --author=repeatadmin --yes`
+    And I run `wp database reset --author=repeatadmin --yes`
     Then STDOUT should contain:
       """
       Success: Database is reset successfully.
@@ -132,7 +132,7 @@ Feature: Basic tests
     Given a WP install
 
     When I run `wp user create testadmin testadmin@gmail.com --role=administrator`
-    And I run `wp database reset --author=testadmin`
+    And I run `wp database reset --author=testadmin --yes`
     Then STDOUT should contain:
       """
       Success: Database is reset successfully.
@@ -151,7 +151,7 @@ Feature: Basic tests
     Given a WP install
 
     When I run `wp user create spacedadmin spacedadmin@gmail.com --role=administrator`
-    And I run `wp database reset --author=" spacedadmin "`
+    And I run `wp database reset --author=" spacedadmin " --yes`
     Then STDOUT should contain:
       """
       Success: Database is reset successfully.
@@ -162,7 +162,7 @@ Feature: Basic tests
     Given a WP install
 
     When I run `wp user create caseadmin caseadmin@gmail.com --role=administrator`
-    And I run `wp database reset --author=CASEADMIN`
+    And I run `wp database reset --author=CASEADMIN --yes`
     Then STDOUT should contain:
       """
       Success: Database is reset successfully.
@@ -218,4 +218,47 @@ Feature: Basic tests
     Then STDOUT should contain:
       """
       --author
+      """
+
+  Scenario: Test help shows yes parameter
+    Given an empty directory
+
+    When I try `PAGER= wp help database reset`
+    Then STDOUT should contain:
+      """
+      --yes
+      """
+
+  Scenario: Test reset prompts for confirmation when --yes is not passed
+    Given a WP install
+
+    When I run `wp user create noyesadmin noyesadmin@gmail.com --role=administrator`
+    And I run `wp database reset --author=noyesadmin`
+    Then STDOUT should contain:
+      """
+      Are you sure you want to reset the database? [y/n]
+      """
+    And STDOUT should not contain:
+      """
+      Success: Database is reset successfully.
+      """
+
+    When I run `wp user get noyesadmin --field=login`
+    Then STDOUT should be:
+      """
+      noyesadmin
+      """
+
+  Scenario: Test reset proceeds without prompting when --yes is passed
+    Given a WP install
+
+    When I run `wp user create yesadmin yesadmin@gmail.com --role=administrator`
+    And I run `wp database reset --author=yesadmin --yes`
+    Then STDOUT should not contain:
+      """
+      [y/n]
+      """
+    And STDOUT should contain:
+      """
+      Success: Database is reset successfully.
       """

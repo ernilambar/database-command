@@ -14,11 +14,14 @@ class DatabaseCommand extends WP_CLI_Command {
 	*
 	 * --author=<username>
 	 * : Administrator user you want to keep after reset.
+	 *
+	 * [--yes]
+	 * : Answer yes to the confirmation message.
 	*
 	 * ## EXAMPLES
 	 *
 	 *     # Reset database and keep `admin` user.
-	 *     $ wp database reset --author=admin
+	 *     $ wp database reset --author=admin --yes
 	 *
 	 * @since 1.0.0
 	 *
@@ -60,6 +63,8 @@ class DatabaseCommand extends WP_CLI_Command {
 		if ( true !== \user_can( $author_obj, 'manage_options' ) ) {
 			WP_CLI::error( 'User is not administrator.' );
 		}
+
+		WP_CLI::confirm( 'Are you sure you want to reset the database?', $assoc_args );
 
 		$this->reset_callback( $author_obj );
 	}

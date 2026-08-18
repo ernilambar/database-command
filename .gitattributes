@@ -1,0 +1,10 @@
+/.claude export-ignore
+/.editorconfig export-ignore
+/.gherkin-lintrc export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/behat.yml export-ignore
+/features export-ignore
+/phpcs.xml.dist export-ignore
+/phpstan.neon.dist export-ignore
+/wp-cli.yml export-ignore
