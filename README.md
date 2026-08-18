@@ -10,7 +10,7 @@ Quick links: [Using](#using) | [Installing](#installing)
 ## Using
 
 ~~~
-wp database reset --author=<username>
+wp database reset --author=<username> [--yes]
 ~~~
 
 **OPTIONS**
@@ -18,10 +18,13 @@ wp database reset --author=<username>
 	--author=<username>
 		Administrator user you want to keep after reset.
 
+	[--yes]
+		Answer yes to the confirmation message.
+
 **EXAMPLES**
 
     # Reset database and keep `admin` user.
-    $ wp database reset --author=admin
+    $ wp database reset --author=admin --yes
 
 ## Installing
 
