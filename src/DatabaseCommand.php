@@ -20,10 +20,14 @@ class DatabaseCommand extends WP_CLI_Command {
 	 *     # Reset database and keep `admin` user.
 	 *     $ wp database reset --author=admin
 	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 *
 	 * @when after_wp_load
 	 *
-	 * @param array $args       Indexed array of positional arguments.
-	 * @param array $assoc_args Associative array of associative arguments.
+	 * @param array<int, string>  $args       Indexed array of positional arguments.
+	 * @param array<string, mixed> $assoc_args Associative array of associative arguments.
 	 */
 	public function reset( $args, $assoc_args ) {
 		// Bail if multisite.
@@ -38,6 +42,14 @@ class DatabaseCommand extends WP_CLI_Command {
 		$assoc_args = \wp_parse_args( $assoc_args, $defaults );
 
 		$author = $assoc_args['author'];
+
+		if ( is_string( $author ) ) {
+			$author = trim( $author );
+		}
+
+		if ( empty( $author ) ) {
+			WP_CLI::error( 'User does not exist.' );
+		}
 
 		$author_obj = \get_user_by( 'login', $author );
 
@@ -55,15 +67,25 @@ class DatabaseCommand extends WP_CLI_Command {
 	/**
 	 * Reset database.
 	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 *
 	 * @access private
 	 *
-	 * @param WP_User $user WP_User object.
+	 * @param \WP_User $user WP_User object.
 	 */
-	private function reset_callback( $user ) {
+	private function reset_callback( \WP_User $user ) {
 		WP_CLI::log( 'Resetting...' );
 
 		// We don't want email notification.
 		if ( ! function_exists( 'wp_new_blog_notification' ) ) {
+			/**
+			 * @since 1.0.0
+			 *
+			 * @return void
+			 */
+			// @phpstan-ignore function.inner
 			function wp_new_blog_notification() {
 				// Silence is golden.
 			}
@@ -74,15 +96,25 @@ class DatabaseCommand extends WP_CLI_Command {
 		$blogname    = \get_option( 'blogname' );
 		$blog_public = \get_option( 'blog_public' );
 		$siteurl     = \get_option( 'siteurl' );
+		$home        = \get_option( 'home' );
 
+		/**
+		 * WordPress database access abstraction object.
+		 *
+		 * @var \wpdb $wpdb
+		 */
 		global $wpdb;
 
-		$prefix = str_replace( '_', '\_', $wpdb->prefix );
+		$prefix = $wpdb->esc_like( $wpdb->prefix );
 
 		$tables = $wpdb->get_col( "SHOW TABLES LIKE '{$prefix}%'" ); // phpcs:ignore WordPress.DB.PreparedSQL
 
 		foreach ( $tables as $table ) {
 			$wpdb->query( "DROP TABLE $table" ); // phpcs:ignore WordPress.DB.PreparedSQL
+
+			if ( ! empty( $wpdb->last_error ) ) {
+				WP_CLI::error( "Failed to drop table {$table} ({$wpdb->last_error})." );
+			}
 		}
 
 		// Set site URL.
@@ -98,9 +130,26 @@ class DatabaseCommand extends WP_CLI_Command {
 			WP_CLI::error( 'Resetting produced database errors, and may have partially or completely failed.' );
 		}
 
+		// Restore siteurl and home if they were customized.
+		if ( $siteurl ) {
+			\update_option( 'siteurl', $siteurl );
+		}
+		if ( $home ) {
+			\update_option( 'home', $home );
+		}
+
 		$user_id = isset( $result['user_id'] ) ? absint( $result['user_id'] ) : 0;
 
-		$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->users SET user_pass = %s, user_activation_key = '' WHERE ID = %d", $user->user_pass, $user_id ) );
+		$wpdb->update(
+			$wpdb->users,
+			array(
+				'user_pass'           => $user->user_pass,
+				'user_activation_key' => '',
+			),
+			array( 'ID' => $user_id ),
+			array( '%s', '%s' ),
+			array( '%d' )
+		);
 
 		// Fix password update nag.
 		\update_user_meta( $user_id, 'default_password_nag', false );
